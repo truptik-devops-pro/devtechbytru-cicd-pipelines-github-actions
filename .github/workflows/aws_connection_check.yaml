@@ -24,7 +24,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::738158818734:role/terraform-cicd-github-oidc-role
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/terraform-cicd-github-oidc-role
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Show caller identity
