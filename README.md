@@ -1,6 +1,6 @@
 # DevOps Engineering Portfolio
 
-![DevOps Lifecycle](https://i.imgur.com/TFRElkA.png)
+![DevOps Lifecycle](img/Screenshot-2025-03-26-at-12.48.34-PM.png)
 
 ## 🔍 Overview
 
