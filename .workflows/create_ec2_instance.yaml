@@ -1,0 +1,62 @@
+name: EC2 Instance Creation Terraform
+
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+
+env:
+  TF_VERSION: "1.11.4" # pin so runners are deterministic
+  AWS_REGION: "eu-west-2"
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # required for OIDC
+      contents: read
+
+    defaults:
+      run:
+        working-directory: infra
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/terraform-cicd-github-oidc-role
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3 # latest major  [oai_citation_attribution:1‡GitHub](https://github.com/hashicorp/setup-terraform?utm_source=chatgpt.com)
+
+      - name: Terraform Init
+        run: terraform init -input=false
+
+      - name: Terraform FMT (lint)
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          terraform plan -no-color -out=tfplan
+          terraform show -no-color tfplan > plan.txt
+
+      # Surface the plan in PRs for reviewers
+      - name: Attach plan to PR
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: infra/plan.txt
+
+      # Auto-apply only on merge to main
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -input=false -auto-approve tfplan
