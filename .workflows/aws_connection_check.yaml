@@ -1,0 +1,30 @@
+# .github/workflows/check-aws.yml
+name: AWS connection test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ping-aws:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/terraform-cicd-github-oidc-role
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Show caller identity
+        run: |
+          echo "If this prints an ARN, creds are good:"
+          aws sts get-caller-identity
+
+      - name: List S3 buckets
+        run: aws s3 ls
