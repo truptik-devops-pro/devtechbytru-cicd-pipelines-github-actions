@@ -1,19 +1,16 @@
-# DevOps Portfolio – End-to-End Cloud-Native Delivery
+<!-- README.md -->
 
-\*Author: **<YOUR NAME>\***
-
-> **Role**  DevOps / Cloud Engineer  
-> **Primary Cloud**  AWS (multi-account, multi-region)  
-> **IaC**  Terraform & Ansible  
-> **Orchestration**  Kubernetes (EKS)  
-> **Containers**  Docker & Red Hat UBI  
-> **CI/CD**  GitHub Actions + AWS Code\* suite
+<div align="center">
+  <img src="https://img.shields.io/badge/DevOps-Portfolio-blue.svg" alt="DevOps Portfolio"/>
+  <h1 style="font-family:'Times New Roman', serif; color:#2c3e50;">DevOps Portfolio – End-to-End Cloud-Native Delivery</h1>
+  <h3 style="font-family:'Times New Roman', serif; color:#34495e;">Author: <YOUR NAME> &nbsp;|&nbsp; Role: DevOps / Cloud Engineer</h3>
+</div>
 
 ---
 
-## 1 | Executive Summary
+## <span style="font-family:'Times New Roman', serif; color:#2c3e50;">🌐 Projects Overview</span>
 
-This repository is a **reference implementation** of my core DevOps skill set, showcasing a secure, fully automated path from source control to a production-grade Kubernetes workload:
+This repository showcases my **DevOps Projects**, highlighting:
 
 1. **Infrastructure as Code** – reproducible AWS builds with Terraform
 2. **CI/CD Pipelines** – Git-Ops–driven releases via GitHub Actions
@@ -24,60 +21,57 @@ This repository is a **reference implementation** of my core DevOps skill set, s
 
 ---
 
-## 2 | High-Level Architecture
+## <span style="font-family:'Times New Roman', serif; color:#2c3e50;">🚀 Architecture Diagram</span>
 
-[Developer Laptop]──git push──►[GitHub]───triggers──►[GitHub Actions]
-│
-+───────────────────────────────┤
-│ ▼
-[Terraform Cloud]────────►[AWS Accounts (prod / non-prod)]
-│ │
-│ +─────[EKS Clusters]─────+
-│ │ │
-▼ ▼ ▼
-[TF State Backend] [Docker Registry] [RDS / Aurora / …]
+```mermaid
+flowchart LR
+  A[Developer Laptop] -->|git push| B(GitHub)
+  B -->|trigger| C[GitHub Actions]
+  C --> D[Terraform Cloud]
+  D --> E[AWS Accounts (prod/non-prod)]
+  E --> F[EKS Clusters]
+  E --> G[AWS Databases]
+  C --> H[Docker Registry]
 
-_(Editable file: `docs/architecture.drawio`)_
-
----
-
-## 3 | Key Features
-
-| Domain               | Highlights                                                                                                                     |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| **Terraform**        | • Modular design • S3 + DynamoDB state locking • Automated drift detection                                                     |
-| **CI/CD**            | • GitHub Actions workflows • Multi-stage Docker build & cache • OIDC least-privilege deploy role                               |
-| **Kubernetes**       | • Declarative Helmfile releases • Progressive delivery (blue-green/canary) • Cluster policy via OPA Gatekeeper                 |
-| **Ansible**          | • Idempotent pod bootstrap tasks • Dynamic inventory from K8s API • Secret injection via AWS Secrets Manager                   |
-| **Backup & Restore** | • 35-day RDS/Aurora snapshots • DynamoDB PITR & S3 exports • Regional fail-over playbooks                                      |
-| **Docker**           | • Alpine → UBI migration for DISA-STIG hardening • SBOM (`syft`) & CVE scan (`grype`) • Cosign signatures & Rekor attestations |
-
----
-
----
-
-## 4 | Getting Started (Local Lab)
-
-### 5.1 Prerequisites
-
-- Terraform ≥ 1.7
-- Docker ≥ 25.x
-- Kubectl & Helm
-- AWS CLI with an IAM role that can create resources
-- Python 3.12 + pipx (for Ansible & helpers)
-
-### 5.2 One-Click Bootstrap
-
-```bash
-# Clone & initialise Terraform back-end
-git clone https://github.com/<your-user>/devops-portfolio.git
-cd devops-portfolio/terraform/live/lab
-terraform init && terraform apply
-
-# Build & push the demo image
-make docker-build docker-push
-
-# Provision EKS & deploy application
-make eks-create
-make deploy-app
+  <table>
+  <thead>
+    <tr>
+      <th align="left">Domain</th>
+      <th align="left">Tools & Technologies</th>
+      <th align="left">Key Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Infrastructure as Code</strong></td>
+      <td>Terraform (v1.7+), AWS Provider</td>
+      <td>Modular modules, state locking, drift detection</td>
+    </tr>
+    <tr>
+      <td><strong>CI/CD</strong></td>
+      <td>GitHub Actions, AWS OIDC</td>
+      <td>Multi-stage pipelines, automated tests, least-privilege</td>
+    </tr>
+    <tr>
+      <td><strong>Containerization</strong></td>
+      <td>Docker, Alpine, UBI, Syft, Grype, Cosign</td>
+      <td>Alpine→UBI migration, SBOM generation, image signing</td>
+    </tr>
+    <tr>
+      <td><strong>Config Management</strong></td>
+      <td>Ansible, AWS Secrets Manager</td>
+      <td>Idempotent roles, dynamic inventory, secret injection</td>
+    </tr>
+    <tr>
+      <td><strong>Kubernetes</strong></td>
+      <td>EKS, Helmfile, OPA Gatekeeper</td>
+      <td>Declarative releases, canary/blue-green, policy enforcement</td>
+    </tr>
+    <tr>
+      <td><strong>Backup & DR</strong></td>
+      <td>RDS/Aurora snapshots, DynamoDB PITR, S3 exports</td>
+      <td>35-day retention, cross-region restore, runbooks</td>
+    </tr>
+  </tbody>
+</table>
 ```
