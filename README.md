@@ -1,6 +1,6 @@
 # DevOps Projects
 
-![DevOps Lifecycle](https://i.imgur.com/TFRElkA.png)
+![DevOps Lifecycle]([https://i.imgur.com/TFRElkA.png](https://cyberpanel.net/blog/devops-cycle))
 
 ## 🔍 Overview
 
