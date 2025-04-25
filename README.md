@@ -1,4 +1,4 @@
-# DevOps Engineering Portfolio
+# DevOps Projects
 
 ![DevOps Lifecycle](https://i.imgur.com/TFRElkA.png)
 
