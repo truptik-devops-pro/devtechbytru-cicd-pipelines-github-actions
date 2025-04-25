@@ -1,11 +1,12 @@
 # .github/workflows/check-aws.yml
 name: AWS Connection Test
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: ["main"]
+    branches:
+      - main
   pull_request:
-    branches: ["ec2_resource_creation"]
+    branches:
+      - main
 env:
   AWS_REGION: "eu-west-2"
 

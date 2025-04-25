@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     branches:
-      - main
+      - ec2_resource_creation
 
 env:
   TF_VERSION: "1.11.4" # pin so runners are deterministic
